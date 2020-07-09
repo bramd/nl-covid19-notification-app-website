@@ -3,3 +3,13 @@ set -e # halt script on error
 
 bundle exec jekyll build
 bundle exec htmlproofer ./_site --checks-to-ignore=LinkCheck
+
+npm install -g axe-cli &&
+for file in _site/*.html
+do
+  axe --exit "file://$PWD/$file"
+done &&
+for file in _site/en/*.html
+do
+  axe --exit "file://$PWD/$file"
+done
